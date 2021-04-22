@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveToPoint : MonoBehaviour
 {
 
-    public int speed = 1;
+    public float speed = 1f;
     public GameObject player;//здесь ми указываем персонажа как игровой Object;
 
     void Start()
