@@ -36,22 +36,20 @@ public class MoveToPoint : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
-        // if (Input.GetKey(KeyCode.D))
-        //{
-        //  player.transform.position -= player.transform.right * speed * Time.deltaTime;
-        //send.Send("D");
-        //}
-        //if (Input.GetKey(KeyCode.A))
-        //{
-        //   player.transform.position += player.transform.right * speed * Time.deltaTime;
-        //  send.Send("A");
-        //}                                              //всё легко и просто, как борщ(всё как Вы и просили)
+        if (Input.GetKey(KeyCode.D))
+        {          
+        send.Send("D");
+        }
+        if (Input.GetKey(KeyCode.A))
+        {          
+          send.Send("A");
+        }                  
     }
 
     private void FixedUpdate()
     {
         Vector3 position = rigidbody.position;
-        position.x = position.x + speed * horizontal * Time.deltaTime;
+        position.x = position.x + speed * horizontal * Time.deltaTime*(-1);
         rigidbody.MovePosition(position);
     }
 }
