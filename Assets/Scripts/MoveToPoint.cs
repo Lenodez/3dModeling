@@ -6,7 +6,8 @@ using System.Threading;
 
 public class MoveToPoint : MonoBehaviour
 {
-
+    Rigidbody rigidbody;
+    float horizontal;
     public float speed = 1f;
     public GameObject player;//здесь ми указываем персонажа как игровой Object;
     NetworkSend send = new NetworkSend();
@@ -15,6 +16,7 @@ public class MoveToPoint : MonoBehaviour
     IPAddress IP = IPAddress.Parse("127.0.0.1");
     void Start()
     {
+        rigidbody = GetComponent<Rigidbody>();
         player = (GameObject)this.gameObject; //тут присваиваем персонажа к игровому Object или как-то так.
         receiver.Localport = 3333;
         send.Sendport = 9999;
@@ -33,16 +35,23 @@ public class MoveToPoint : MonoBehaviour
 
     void Update()
     {
+        horizontal = Input.GetAxis("Horizontal");
+        // if (Input.GetKey(KeyCode.D))
+        //{
+        //  player.transform.position -= player.transform.right * speed * Time.deltaTime;
+        //send.Send("D");
+        //}
+        //if (Input.GetKey(KeyCode.A))
+        //{
+        //   player.transform.position += player.transform.right * speed * Time.deltaTime;
+        //  send.Send("A");
+        //}                                              //всё легко и просто, как борщ(всё как Вы и просили)
+    }
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            player.transform.position -= player.transform.right * speed * Time.deltaTime;
-            send.Send("D");
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            player.transform.position += player.transform.right * speed * Time.deltaTime;
-            send.Send("A");
-        }                                              //всё легко и просто, как борщ(всё как Вы и просили)
+    private void FixedUpdate()
+    {
+        Vector3 position = rigidbody.position;
+        position.x = position.x + speed * horizontal * Time.deltaTime;
+        rigidbody.MovePosition(position);
     }
 }
